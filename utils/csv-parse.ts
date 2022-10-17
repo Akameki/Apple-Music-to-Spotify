@@ -2,13 +2,10 @@
 //     headers: String[],
 // };
 
-export default function csvParse(fileName: string) {
-    //@ts-ignore
-    const rawData = Bun.readFile('test-csv.csv') as string;
+export default async function csvParse(fileName: string) {
+    // const rawData = Bun.readFile('test-csv.csv') as string;
     // const rawData = fs.readFileSync('test-csv.csv') as string;
-    // const rawData = await Deno.readTextFile('test-csv.csv');
-    
-    
+    const rawData = await Deno.readTextFile('./test-csv.csv');
     
     const arr = rawData.split('\n');
     const headers = arr[0].split(',');
@@ -21,5 +18,6 @@ export default function csvParse(fileName: string) {
         })
         returnArr.push(obj);
     }
+    
     return returnArr;
 }

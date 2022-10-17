@@ -1,14 +1,16 @@
-import type dataInfo from "./types/dataInfo";
-import csvParse from "./utils/csv-parse";
-import { addToPlaylist, search } from "./utils/api";
-import apiSearchResponse from "./types/apiSearchResponse";
+import type dataInfo from "./types/dataInfo.ts";
+import csvParse from "./utils/csv-parse.ts";
+import { addToPlaylist, search } from "./utils/api.ts";
+import apiSearchResponse from "./types/apiSearchResponse.ts";
 
-
-const songs = csvParse('./test-csv.csv') as dataInfo[];
 
 
 async function main() {
+
     const songIDs:string[] = [];
+
+    const songs = await csvParse('./test-csv.csv') as dataInfo[];
+
     for (const item of songs) {
         const info = await search({
             track: item.trackName,
@@ -19,6 +21,7 @@ async function main() {
             console.log(`Not Found: ${item.trackName}`);
             continue;
         }
+        
         const songData = info.tracks.items.at(0);
         songIDs.push(songData.uri);
     };

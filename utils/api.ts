@@ -1,8 +1,10 @@
-import fetch2 from 'node-fetch';
+import {dotEnvConfig} from '../deps.ts';
 
-const token = process.env["BEARER_TOKEN"];
+const token = dotEnvConfig().BEARER_TOKEN;
 
-export async function search({track, artist, year}){
+import searchObj from "../types/searchObj.ts";
+
+export async function search({track, artist, year}: searchObj){
     const BASE_URL = 'https://api.spotify.com/v1/search/';
     const params = new URLSearchParams({
         // q: encodeURI(`track:${track} artist:${artist}`),
@@ -14,7 +16,6 @@ export async function search({track, artist, year}){
         headers: {
             "Accept": "application/json",
             "Content-Type": "application/json",
-            "Content-Length": "0",
             "Authorization": "Bearer " + token
         }
     });
@@ -27,7 +28,6 @@ export async function search({track, artist, year}){
 };
 
 export async function addToPlaylist(playlist_id: string, uris: string){
-    console.log(uris);
     
     const BASE_URL = `https://api.spotify.com/v1/playlists/${playlist_id}/tracks`;
     const params = new URLSearchParams({
@@ -37,28 +37,13 @@ export async function addToPlaylist(playlist_id: string, uris: string){
     
     console.log(API_URL);
     
-    // const response = await fetch(API_URL,{
-    //     method: "POST",
-    //     headers: {
-    //         "Accept": "application/json",
-    //         "Content-Type": "application/json",
-    //         "Content-Length": "0",
-    //         "Authorization": "Bearer " + token,
-    //     }
-    // });
-
-    const myHeaders = new Headers();
-    myHeaders.append("Authorization", "Bearer " + token);
-    myHeaders.append("Content-Type", "application/json");
-    myHeaders.append("Accept", "application/json");
-    myHeaders.append("Content-Length", "1000");
-    // fetch
-    console.log(myHeaders.get("Content-Length"));
-
-
-    const response = await fetch2(API_URL, {
-        method: 'POST',
-        headers: myHeaders,
+    const response = await fetch(API_URL,{
+        method: "POST",
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + token,
+        }
     });
     
 
@@ -114,7 +99,7 @@ export async function createPlaylist(name: string, user_id: string) {
             "Accept": "application/json",
             "Content-Type": "application/json",
             "Content-Length": "0",
-            "Authorization": "Bearer " + token
+            "Authorization": "Bearer " + Deno.env.get("BEARER_TOKEN_PLAYLIST")
         }
     });
     if (response.ok) {
