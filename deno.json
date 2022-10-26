@@ -1,5 +1,5 @@
 {
     "tasks": {
-      "start": "deno run --allow-read --allow-env --allow-net spotify.ts"
+      "start": "deno run --allow-read --allow-env --allow-net index.ts denoRunPlaylist testDescription"
     }
   }

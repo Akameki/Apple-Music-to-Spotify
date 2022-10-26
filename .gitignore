@@ -1,3 +1,5 @@
-node_modules
 .env
+node_modules
 node-testing
+lib_AM.csv
+README.md
