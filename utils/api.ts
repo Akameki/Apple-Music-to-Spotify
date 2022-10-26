@@ -5,6 +5,7 @@ const token = dotEnvConfig().BEARER_TOKEN;
 import searchObj from "../types/searchObj.ts";
 
 export async function search({track, artist, year}: searchObj){
+    //TODO: use year in search
     const BASE_URL = 'https://api.spotify.com/v1/search/';
     const params = new URLSearchParams({
         // q: encodeURI(`track:${track} artist:${artist}`),

@@ -13,16 +13,17 @@ async function main() {
 
     for (const item of songs) {
         const info = await search({
-            track: item.trackName,
-            artist: item.artist,
-            year: item.year,
+            track: item.Title,
+            artist: item.Artist,
+            year: item.Year,
         }) as apiSearchResponse;
         if (!info.tracks.items.length){
-            console.log(`Not Found: ${item.trackName}`);
+            console.log(`Not Found: ${item.Title}`);
             continue;
         }
         
         const songData = info.tracks.items.at(0);
+        // @ts-ignore
         songIDs.push(songData.uri);
     };
     const response = await addToPlaylist('3Qow5iHDL82Ey0Og9LUTaS',songIDs.join(','));

@@ -12,7 +12,7 @@ export default async function csvParse(fileName: string) {
     const returnArr = [];
     for (let i = 1; i < arr.length; i++) {
         const line = arr[i]; 
-        const obj = {};
+        const obj: { [key: string]: string } = {};
         line.split(',').forEach((e,j)=>{
             obj[headers[j]] = e;
         })
